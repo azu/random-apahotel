@@ -4,7 +4,7 @@ Select apahote randomly.
 
 ## Usage
 
-Visit <>
+Visit <https://random-apahotel.netlify.com/>
 
 ## Changelog
 
