@@ -1,6 +1,6 @@
 # random-apahotel
 
-Select apahote randomly.
+Select apahotel randomly.
 
 ## Usage
 
