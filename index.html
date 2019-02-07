@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ランダムアパホテル</title>
+</head>
+<body>
+<main>
+    <h1>次のアパホテル:</h1>
+    <h2 id="js-apahotel"></h2>
+</main>
+<script>
+    // https://www.apahotel.com/hotel_list/
+    // Array.from(document.querySelectorAll("a")).filter(e => e.textContent.includes("No.")).map(e => ({ name: e.textContent, url: e.href }))
+    const apahotels = [
+        {
+            "name": "No.126 アパホテル〈札幌〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=2"
+        },
+        {
+            "name": "No.124 アパホテル〈札幌大通公園〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=4"
+        },
+        {
+            "name": "No.221 アパホテル〈TKP札幌駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=262"
+        },
+        {
+            "name": "No.196 アパホテル〈札幌すすきの駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=175"
+        },
+        {
+            "name": "No.197 アパホテル〈札幌すすきの駅西〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=176"
+        },
+        {
+            "name": "No.123 アパホテル〈札幌すすきの〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=3"
+        },
+        {
+            "name": "No.198 アパホテル〈札幌すすきの駅南〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=177"
+        },
+        {
+            "name": "No.131 アパホテル＆リゾート〈札幌〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=1"
+        },
+        {
+            "name": "No.248 アパホテル〈TKP札幌駅北口〉EXCELLENT",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=413"
+        },
+        {
+            "name": "No.224 アパホテル〈帯広駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=299"
+        },
+        {
+            "name": "No.157 アパヴィラホテル〈仙台駅五橋〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=5"
+        },
+        {
+            "name": "No.152 アパホテル〈仙台勾当台公園〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=6"
+        },
+        {
+            "name": "No.284 アパホテル〈TKP仙台駅北〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=451"
+        },
+        {
+            "name": "No.128 アパホテル〈山形駅前大通〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=9"
+        },
+        {
+            "name": "No.249 アパホテル〈山形鶴岡駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=415"
+        },
+        {
+            "name": "No.259 アパホテル〈福島駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=400"
+        },
+        {
+            "name": "No.156 アパホテル〈郡山駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=10"
+        },
+        {
+            "name": "No.216 アパホテル〈青森駅東〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=250"
+        },
+        {
+            "name": "No.234 アパホテル〈青森駅県庁通〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=384"
+        },
+        {
+            "name": "No.233 アパホテル〈本八戸〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=337"
+        },
+        {
+            "name": "No.154 アパホテル〈北上駅西〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=8"
+        },
+        {
+            "name": "No.203 アパホテル〈秋田千秋公園〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=207"
+        },
+        {
+            "name": "No.161 アパホテル〈新潟古町〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=52"
+        },
+        {
+            "name": "No.155 アパホテル〈新潟東中通〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=53"
+        },
+        {
+            "name": "No.164 アパヴィラホテル〈燕三条駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=54"
+        },
+        {
+            "name": "No.168 アパホテル〈燕三条駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=55"
+        },
+        {
+            "name": "No.140 アパリゾート上越妙高",
+            "url": "https://www.apahotel.com/c/resort/myoko/index.html"
+        },
+        {
+            "name": "No.281 アパホテル〈上越妙高駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=452"
+        },
+        {
+            "name": "No.113 アパホテル〈軽井沢駅前〉軽井沢荘",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=47"
+        },
+        {
+            "name": "No.230 アパホテル〈甲府南〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=319"
+        },
+        {
+            "name": "No.135 アパヴィラホテル〈赤坂見附〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=12"
+        },
+        {
+            "name": "No.239 アパホテル〈六本木駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=251"
+        },
+        {
+            "name": "No.186 アパホテル〈六本木一丁目駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=14"
+        },
+        {
+            "name": "No.121 アパホテル〈西麻布〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=13"
+        },
+        {
+            "name": "No.215 アパホテル〈新橋虎ノ門〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=205"
+        },
+        {
+            "name": "No.182 アパホテル〈新橋御成門〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=15"
+        },
+        {
+            "name": "No.199 アパホテル〈三田駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=30"
+        },
+        {
+            "name": "No.238 アパホテル〈品川泉岳寺駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=255"
+        },
+        {
+            "name": "No.183 アパホテル〈人形町駅北〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=17"
+        },
+        {
+            "name": "No.188 アパホテル〈小伝馬町駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=18"
+        },
+        {
+            "name": "No.222 アパホテル〈東日本橋駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=211"
+        },
+        {
+            "name": "No.176 アパホテル〈日本橋浜町駅南〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=16"
+        },
+        {
+            "name": "No.277 アパホテル〈日本橋馬喰町駅北〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=441"
+        },
+        {
+            "name": "No.273 アパホテル〈神田駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=433"
+        },
+        {
+            "name": "No.192 アパホテル〈神田駅東〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=22"
+        },
+        {
+            "name": "No.195 アパホテル〈秋葉原駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=31"
+        },
+        {
+            "name": "No.267 アパホテル〈秋葉原駅電気街口〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=447"
+        },
+        {
+            "name": "No.209 アパホテル〈銀座京橋〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=153"
+        },
+        {
+            "name": "No.210 アパホテル〈銀座宝町〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=172"
+        },
+        {
+            "name": "No.178 アパホテル〈八丁堀駅南〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=19"
+        },
+        {
+            "name": "No.256 アパホテル〈新富町駅北〉（全室禁煙）",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=392"
+        },
+        {
+            "name": "No.206 アパホテル〈新富町駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=152"
+        },
+        {
+            "name": "No.181 アパホテル〈築地駅南〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=20"
+        },
+        {
+            "name": "No.220 アパホテル〈新宿御苑前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=173"
+        },
+        {
+            "name": "No.236 アパホテル〈新宿 歌舞伎町タワー〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=252"
+        },
+        {
+            "name": "No.227 アパホテル〈東新宿 歌舞伎町〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=232"
+        },
+        {
+            "name": "No.260 アパホテル〈東新宿 歌舞伎町東〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=401"
+        },
+        {
+            "name": "No.200 アパホテル〈東新宿駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=29"
+        },
+        {
+            "name": "No.275 アパホテル＆リゾート〈西新宿五丁目駅タワー〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=424"
+        },
+        {
+            "name": "No.201 アパホテル〈渋谷道玄坂上〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=154"
+        },
+        {
+            "name": "No.228 アパホテル〈神田神保町駅東〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=228"
+        },
+        {
+            "name": "No.187 アパホテル〈東京九段下〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=21"
+        },
+        {
+            "name": "No.269 アパホテル〈飯田橋駅南〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=421"
+        },
+        {
+            "name": "No.257 アパホテル〈飯田橋駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=394"
+        },
+        {
+            "name": "No.218 アパホテル〈半蔵門 平河町〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=193"
+        },
+        {
+            "name": "No.242 アパホテル〈京成上野駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=336"
+        },
+        {
+            "name": "No.240 アパホテル〈上野駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=335"
+        },
+        {
+            "name": "No.268 アパホテル〈浅草雷門〉（全室禁煙）",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=422"
+        },
+        {
+            "name": "No.266 アパホテル〈浅草 田原町駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=393"
+        },
+        {
+            "name": "No.184 アパホテル〈浅草 蔵前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=23"
+        },
+        {
+            "name": "No.232 アパホテル〈浅草橋駅北〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=261"
+        },
+        {
+            "name": "No.251 アパホテル〈御茶ノ水駅北〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=326"
+        },
+        {
+            "name": "No.179 アパホテル〈池袋駅北口〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=24"
+        },
+        {
+            "name": "No.246 アパホテル〈巣鴨駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=325"
+        },
+        {
+            "name": "No.111 アパホテル〈東京板橋駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=25"
+        },
+        {
+            "name": "No.172 アパホテル〈東京潮見駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=11"
+        },
+        {
+            "name": "No.139 アパホテル〈東京木場〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=27"
+        },
+        {
+            "name": "No.120 アパホテル〈東京大島〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=26"
+        },
+        {
+            "name": "No.185 アパホテル〈京急蒲田駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=28"
+        },
+        {
+            "name": "No.252 アパホテル〈蒲田駅東〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=416"
+        },
+        {
+            "name": "No.231 アパホテル〈蒲田駅西〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=330"
+        },
+        {
+            "name": "No.235 アパホテル〈御徒町駅北〉S",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=385"
+        },
+        {
+            "name": "No.253 アパホテル〈TKP日暮里駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=417"
+        },
+        {
+            "name": "No.271 アパホテル〈TKP東京西葛西〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=455"
+        },
+        {
+            "name": "No.244 アパホテル〈町田駅東〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=404"
+        },
+        {
+            "name": "No.280 アパホテル〈八丁堀 新富町〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=435"
+        },
+        {
+            "name": "No.285 アパホテル〈浅草駅前〉(全室禁煙) ",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=438"
+        },
+        {
+            "name": "No.286 アパホテル〈八王子駅西〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=501"
+        },
+        {
+            "name": "No.289 アパホテル〈日本橋 馬喰町駅前〉(全室禁煙) ",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=445"
+        },
+        {
+            "name": "No.137 アパホテル〈横浜関内〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=32"
+        },
+        {
+            "name": "No.202 アパホテル〈横浜鶴見〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=184"
+        },
+        {
+            "name": "No.205 アパホテル〈相模原 橋本駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=224"
+        },
+        {
+            "name": "No.272 アパホテル〈相模原 古淵駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=465"
+        },
+        {
+            "name": "No.274 アパホテル〈伊勢原駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=467"
+        },
+        {
+            "name": "No.279 アパホテル〈TKP京急川崎駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=453"
+        },
+        {
+            "name": "No.144 アパホテル＆リゾート〈東京ベイ幕張〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=35"
+        },
+        {
+            "name": "No.134 アパホテル〈千葉八千代緑が丘〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=36"
+        },
+        {
+            "name": "No.258 アパホテル〈千葉印西牧の原駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=430"
+        },
+        {
+            "name": "No.166 アパホテル〈京成成田駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=37"
+        },
+        {
+            "name": "No.237 アパホテル〈さいたま新都心駅北〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=389"
+        },
+        {
+            "name": "No.223 アパホテル〈西川口駅東口〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=280"
+        },
+        {
+            "name": "No.226 アパホテル〈宇都宮駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=307"
+        },
+        {
+            "name": "No.132 アパホテル〈高崎駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=43"
+        },
+        {
+            "name": "No.219 アパホテル〈前橋駅北〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=253"
+        },
+        {
+            "name": "No.225 アパホテル〈伊勢崎駅南〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=300"
+        },
+        {
+            "name": "No.243 アパホテル〈水戸駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=403"
+        },
+        {
+            "name": "No.190 アパホテル〈水戸駅北〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=39"
+        },
+        {
+            "name": "No.127 アパホテル〈名古屋錦〉EXCELLENT",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=76"
+        },
+        {
+            "name": "No.180 アパホテル〈名古屋栄〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=78"
+        },
+        {
+            "name": "No.264 アパホテル〈名古屋栄東〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=408"
+        },
+        {
+            "name": "No.142 アパヴィラホテル〈名古屋丸の内駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=77"
+        },
+        {
+            "name": "No.241 アパホテル〈尾張一宮駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=398"
+        },
+        {
+            "name": "No.283 アパホテル〈名古屋栄北〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=450"
+        },
+        {
+            "name": "No.116 アパホテル〈大垣駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=79"
+        },
+        {
+            "name": "No.263 アパホテル〈岐阜羽島駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=442"
+        },
+        {
+            "name": "No.204 アパホテル〈浜松駅南〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=216"
+        },
+        {
+            "name": "No.214 アパホテル〈富士中央〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=239"
+        },
+        {
+            "name": "No.262 アパホテル〈鈴鹿中央〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=436"
+        },
+        {
+            "name": "No.291 アパホテル〈三重亀山〉2019年3月5日（火）リブランドオープン予定",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=508"
+        },
+        {
+            "name": "No.115 アパホテル〈金沢駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=63"
+        },
+        {
+            "name": "No.130 アパホテル〈金沢中央〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=64"
+        },
+        {
+            "name": "No.101 アパホテル〈金沢片町〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=67"
+        },
+        {
+            "name": "No.119 アパヴィラホテル〈金沢片町〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=68"
+        },
+        {
+            "name": "No.109 アパホテル〈金沢野町〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=66"
+        },
+        {
+            "name": "No.105 アパホテル〈金沢西〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=65"
+        },
+        {
+            "name": "No.102 アパホテル〈小松グランド〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=69"
+        },
+        {
+            "name": "No.107 アパホテル〈小松〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=70"
+        },
+        {
+            "name": "No.114 アパホテル〈加賀大聖寺駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=72"
+        },
+        {
+            "name": "No.147 アパホテル＆リゾート加賀片山津温泉佳水郷",
+            "url": "http://www.kasuikyo.com/"
+        },
+        {
+            "name": "No.108 アパホテル〈福井片町〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=73"
+        },
+        {
+            "name": "No.104 アパホテル〈富山〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=57"
+        },
+        {
+            "name": "No.110 アパホテル〈富山駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=59"
+        },
+        {
+            "name": "No.177 アパヴィラホテル〈富山駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=58"
+        },
+        {
+            "name": "No.138 アパホテル〈高岡丸の内〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=61"
+        },
+        {
+            "name": "No.106 アパホテル〈砺波駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=60"
+        },
+        {
+            "name": "No.103 アパホテル〈魚津駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=62"
+        },
+        {
+            "name": "No.153 アパホテル〈大阪肥後橋駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=86"
+        },
+        {
+            "name": "No.112 アパホテル〈大阪天満〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=89"
+        },
+        {
+            "name": "No.150 アパヴィラホテル〈淀屋橋〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=87"
+        },
+        {
+            "name": "No.143 アパヴィラホテル〈大阪谷町四丁目駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=90"
+        },
+        {
+            "name": "No.122 アパホテル〈大阪谷町〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=91"
+        },
+        {
+            "name": "No.145 アパホテル〈御堂筋本町駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=92"
+        },
+        {
+            "name": "No.270 アパホテル〈御堂筋本町駅東〉（全室禁煙）",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=420"
+        },
+        {
+            "name": "No.261 アパホテル〈なんば駅東〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=402"
+        },
+        {
+            "name": "No.191 アパホテル〈なんば心斎橋〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=88"
+        },
+        {
+            "name": "No.146 アパホテル〈天王寺駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=93"
+        },
+        {
+            "name": "No.171 アパホテル〈堺駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=94"
+        },
+        {
+            "name": "No.125 アパホテル〈関空岸和田〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=95"
+        },
+        {
+            "name": "No.276 アパホテル〈新大阪駅南〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=439"
+        },
+        {
+            "name": "No.278 アパホテル〈東梅田 南森町駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=440"
+        },
+        {
+            "name": "No.288 アパホテル〈堺筋北浜駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=466"
+        },
+        {
+            "name": "No.141 アパホテル〈神戸三宮〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=98"
+        },
+        {
+            "name": "No.174 アパホテル〈姫路駅北〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=99"
+        },
+        {
+            "name": "No.189 アパホテル〈和歌山〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=101"
+        },
+        {
+            "name": "No.117 アパホテル〈京都駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=82"
+        },
+        {
+            "name": "No.136 アパホテル〈京都駅堀川通〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=84"
+        },
+        {
+            "name": "No.133 アパヴィラホテル〈京都駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=83"
+        },
+        {
+            "name": "No.265 アパホテル〈京都駅北〉（全室禁煙）",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=423"
+        },
+        {
+            "name": "No.118 アパホテル〈京都祇園〉EXCELLENT",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=85"
+        },
+        {
+            "name": "No.229 アパホテル〈彦根南〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=313"
+        },
+        {
+            "name": "No.287 アパホテル〈びわ湖 瀬田駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=505"
+        },
+        {
+            "name": "No.250 アパホテル〈広島駅前大橋〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=327"
+        },
+        {
+            "name": "No.165 アパホテル〈広島駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=106"
+        },
+        {
+            "name": "No.162 アパホテル〈倉敷駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=103"
+        },
+        {
+            "name": "No.175 アパホテル〈岡山駅前〉（旧：アパホテル〈岡山駅東口〉）",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=104"
+        },
+        {
+            "name": "No.163 アパホテル〈山口防府〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=109"
+        },
+        {
+            "name": "No.158 アパホテル〈鳥取駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=108"
+        },
+        {
+            "name": "No.169 アパホテル〈高松空港〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=113"
+        },
+        {
+            "name": "No.193 アパホテル〈高松瓦町〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=165"
+        },
+        {
+            "name": "No.170 アパホテル〈丸亀駅前大通〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=114"
+        },
+        {
+            "name": "No.217 アパホテル〈徳島駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=244"
+        },
+        {
+            "name": "No.207 アパホテル〈松山城西〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=229"
+        },
+        {
+            "name": "No.129 アパホテル〈福岡渡辺通駅前〉EXCELLENT",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=118"
+        },
+        {
+            "name": "No.148 アパホテル〈博多駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=119"
+        },
+        {
+            "name": "No.149 アパホテル〈福岡行橋駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=120"
+        },
+        {
+            "name": "No.213 アパホテル〈小倉駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=245"
+        },
+        {
+            "name": "No.173 アパホテル〈佐賀駅前中央〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=122"
+        },
+        {
+            "name": "No.282 アパホテル〈佐賀駅南口〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=473"
+        },
+        {
+            "name": "No.160 アパホテル〈長崎駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=128"
+        },
+        {
+            "name": "No.159 アパホテル〈長崎駅南〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=127"
+        },
+        {
+            "name": "No.167 アパホテル〈熊本交通センター南〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=129"
+        },
+        {
+            "name": "No.194 アパホテル〈宮崎駅橘通〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=167"
+        },
+        {
+            "name": "No.254 アパホテル〈宮崎延岡駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=427"
+        },
+        {
+            "name": "No.255 アパホテル〈宮崎延岡駅南〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=428"
+        },
+        {
+            "name": "No.247 アパホテル〈宮崎都城駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=409"
+        },
+        {
+            "name": "No.208 アパホテル〈鹿児島中央駅前〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=227"
+        },
+        {
+            "name": "No.212 アパホテル〈鹿児島国分〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=234"
+        },
+        {
+            "name": "No.245 アパホテル〈鹿児島天文館〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=405"
+        },
+        {
+            "name": "No.151 アパホテル〈那覇〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=131"
+        },
+        {
+            "name": "No.211 アパホテル〈石垣島〉",
+            "url": "https://www.apahotel.com/page.jsp?id=12&hotel_id=233"
+        }
+    ];
+    const pickAtRandom = (array) => {
+        return array[Math.floor(Math.random() * array.length)];
+    };
+    const apahotel = pickAtRandom(apahotels);
+    const output = document.querySelector("#js-apahotel");
+    const link = document.createElement("a");
+    link.textContent = apahotel.name;
+    link.href = apahotel.url;
+    output.appendChild(
+        link
+    );
+</script>
+</body>
+</html>

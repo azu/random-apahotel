@@ -1,0 +1,28 @@
+{
+  "name": "random-apahotel",
+  "version": "1.0.0",
+  "description": "Select apahote randomly.",
+  "homepage": "https://github.com/azu/random-apahotel",
+  "bugs": {
+    "url": "https://github.com/azu/random-apahotel/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/azu/random-apahotel.git"
+  },
+  "license": "MIT",
+  "author": "azu",
+  "files": [
+    "bin/",
+    "lib/",
+    "src/"
+  ],
+  "main": "lib/random-apahotel.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
